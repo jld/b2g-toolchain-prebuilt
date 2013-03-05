@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/tmp/android-toolchain-eabi/lib'
+libdir='/home/jld/src/b2g-toolchain-prebuilt/toolchain-4.4.3/lib'
