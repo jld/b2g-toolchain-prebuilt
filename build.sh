@@ -4,8 +4,12 @@ set -e -u
 : ${REPO:=repo}
 : ${REPO_FLAGS:=}
 : ${REPO_SYNC_FLAGS:=-j4}
+: ${NO_SYNC:=}
+: ${STRIP:=strip}
 : ${TOOLCHAIN_URL:=git://github.com/jld/linaro-android-toolchain-manifest.git}
 : ${TOOLCHAIN_BRANCH:=b2g}
+: ${LINUX_URL:=git://github.com/jld/linux}
+: ${LINUX_BRANCH:=b2g}
 
 ### Copied from B2G/config.sh
 case `uname` in
@@ -22,6 +26,22 @@ esac
 
 : ${MAKE_FLAGS:=-j$((CORE_COUNT + 2)) }
 : ${TOOLCHAIN_MAKE_FLAGS:=$MAKE_FLAGS}
+: ${LINUX_MAKE_FLAGS:=$MAKE_FLAGS}
+
+get_linux_src() {
+    SRCDIR=$TOPDIR/src/linux
+    if [ -d "$SRCDIR" ]; then
+	if [ -z "$NO_SYNC" ]; then
+	    cd "$SRCDIR"
+	    git remote set-url origin "$LINUX_URL"
+	    git checkout -B "$LINUX_BRANCH" origin/"$LINUX_BRANCH"
+	    git pull --ff-only
+	fi
+    else
+	git clone -b "$LINUX_BRANCH" "$LINUX_URL" "$SRCDIR"
+    fi
+}
+
 
 set -x
 case "${1:-all}" in
@@ -39,7 +59,7 @@ case "${1:-all}" in
 	    "$REPO" $REPO_FLAGS init -u "$TOOLCHAIN_URL" -b "$TOOLCHAIN_BRANCH"
 	    NO_SYNC=
 	fi
-	if [ -z "${NO_SYNC:-}" ]; then
+	if [ -z "$NO_SYNC" ]; then
 	    "$REPO" $REPO_FLAGS sync $REPO_SYNC_FLAGS
 	fi
 	cd build
@@ -47,12 +67,28 @@ case "${1:-all}" in
 	mkdir "$PREFIX"
 	if [ -r Makefile ]; then
 	    # If a build is interrupted it can break the next build.
-	    make distclean || true
+	    make $TOOLCHAIN_MAKE_FLAGS distclean || true
 	fi
 	LINARO_BUILD_EXTRA_CONFIGURE_FLAGS=-disable-graphite \
 	    LINARO_BUILD_EXTRA_MAKE_FLAGS=$TOOLCHAIN_MAKE_FLAGS \
 	    ./linaro-build.sh --with-gcc=gcc-4.4.3 \
 	    --prefix="$PREFIX"
+	;;
+
+    perf)
+	get_linux_src
+	# FIXME: do this in a less bad way
+	case $(uname -ms) in
+	    "Linux x86_64") TRIPLE=x86_64-linux-gnu ;;
+	    "Linux i686") TRIPLE=i686-linux-gnu ;;
+	    *) echo "Unknown platform: $(uname -ms)" >&2; exit 1 ;;
+	esac
+	OBJDIR=$TOPDIR/obj/perf-$TRIPLE
+	DSTBIN=$TOPDIR/perf/$TRIPLE-perf
+	cd "$SRCDIR/tools/perf"
+	mkdir -p "$OBJDIR"
+	make $LINUX_MAKE_FLAGS O="$OBJDIR"
+	"$STRIP" -o "$DSTBIN" "$OBJDIR/perf"
 	;;
 
     *)
