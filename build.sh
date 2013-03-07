@@ -2,14 +2,23 @@
 set -e -u
 : ${TOPDIR:=$(cd "$(dirname "$0")" && pwd)}
 : ${REPO:=repo}
+: ${STRIP:=strip}
+: ${GZIP:=gzip}
+: ${BZIP2:=bzip2}
+: ${XZ:=xz}
+: ${AR:=ar}
+: ${TAR:=tar}
+: ${CURL:=curl}
 : ${REPO_FLAGS:=}
 : ${REPO_SYNC_FLAGS:=-j4}
 : ${NO_SYNC:=}
-: ${STRIP:=strip}
+: ${CURL_FLAGS:=}
 : ${TOOLCHAIN_URL:=git://github.com/jld/linaro-android-toolchain-manifest.git}
 : ${TOOLCHAIN_BRANCH:=b2g}
 : ${LINUX_URL:=git://github.com/jld/linux}
 : ${LINUX_BRANCH:=b2g}
+: ${DEBIAN_DIST:=unstable}
+: ${DEBIAN_MIRROR:=http://ftp.us.debian.org/debian}
 
 ### Copied from B2G/config.sh
 case `uname` in
@@ -42,11 +51,54 @@ get_linux_src() {
     fi
 }
 
+maybe_fetch() {
+    local url=$1 file=$2
+    if ! [ -e "$file" ]; then
+	"$CURL" $CURL_FLAGS -o "$file" "$url"
+    elif [ -z "$NO_SYNC" ]; then
+	"$CURL" $CURL_FLAGS -z "$file" -o "$file" "$url"
+    fi
+}
+
+make_debian_sysroot() {
+    TMPDIR=$TOPDIR/obj/debian-armel
+    TARGET_SYSROOT=$TMPDIR/root
+    TARGET_ARCH=armel
+    TARGET_TRIPLE=arm-linux-gnueabi
+    mkdir -p "$TARGET_SYSROOT"
+    dist_main=$DEBIAN_MIRROR/dists/$DEBIAN_DIST/main
+    packages_url=$dist_main/binary-$TARGET_ARCH/Packages.bz2
+    packages_file=$TMPDIR/Packages.bz2
+    maybe_fetch "$packages_url" "$packages_file"
+    # FIXME: authenticate that blob
+    "$BZIP2" -cd "$packages_file" | awk '
+        $1 == "Package:" { p = $2 }
+        $1 == "Filename:" && p ~ /^(libc6(-dev)?|linux-libc-dev)$/ { print $2 }
+    ' | while read relpath; do
+	deb_file=$TMPDIR/${relpath##*/}
+	maybe_fetch "$DEBIAN_MIRROR/$relpath" "$deb_file"
+	data_tar=$("$AR" t "$deb_file" | grep '^data\.tar\.' | head -1)
+	case $data_tar in
+	    *.gz) compressor=$GZIP ;;
+	    *.bz2) compressor=$BZIP2 ;;
+	    *.xz) compressor=$XZ ;;
+	    *) echo "Unknown compression for $data_tar" >&2; exit 1 ;;
+	esac
+	ar p "$deb_file" "$data_tar" | "$compressor" -cd | \
+	    ( cd "$TARGET_SYSROOT" && tar xvf - )
+    done
+    for x in 1 i n; do
+	ln -nfs "$TARGET_TRIPLE/crt$x.o" "$TARGET_SYSROOT/usr/lib/crt$x.o"
+    done
+}
 
 set -x
+# FIXME: handle multiple arguments
 case "${1:-all}" in
     all)
 	"$0" toolchain-4.4.3
+	"$0" perf
+	"$0" target-perf
 	;;
     toolchain-4.4.3)
 	SRCDIR=$TOPDIR/src/toolchain-4.4.3
@@ -88,6 +140,28 @@ case "${1:-all}" in
 	cd "$SRCDIR/tools/perf"
 	mkdir -p "$OBJDIR"
 	make $LINUX_MAKE_FLAGS O="$OBJDIR"
+	"$STRIP" -o "$DSTBIN" "$OBJDIR/perf"
+	;;
+
+    target-perf)
+	get_linux_src
+	make_debian_sysroot
+	cd "$SRCDIR/tools/perf"
+	REAL_TARGET_TRIPLE=arm-linux-androideabi
+	OBJDIR=$TOPDIR/obj/perf-$TARGET_TRIPLE
+	DSTBIN=$TOPDIR/perf/$REAL_TARGET_TRIPLE-perf
+	cd "$SRCDIR/tools/perf"
+	mkdir -p "$OBJDIR"
+	make $LINUX_MAKE_FLAGS ARCH=arm O="$OBJDIR" \
+	    CROSS_COMPILE="$TOPDIR"/toolchain-4.4.3/bin/arm-linux-androideabi- \
+	    NO_LIBELF=1 NO_NEWT=1 \
+	    CFLAGS="--sysroot=$TARGET_SYSROOT \
+                -isystem =/usr/include -isystem =/usr/include/$TARGET_TRIPLE \
+                -DHAVE_ON_EXIT -mno-android -march=armv7-a -mfloat-abi=softfp \
+                -Os" \
+	    LDFLAGS="-L $TARGET_SYSROOT/usr/lib \
+                 -L $TARGET_SYSROOT/usr/lib/$TARGET_TRIPLE \
+                 -static"
 	"$STRIP" -o "$DSTBIN" "$OBJDIR/perf"
 	;;
 
