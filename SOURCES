@@ -1,0 +1,122 @@
+Sources for this prebuilt toolchain can be downloaded from their
+corresponding Git repositories.
+
+For the files in the "perf" directory:
+
+    src/linux:
+        Repository: git://github.com/jld/linux
+        Branch: b2g
+        Revision: ac5879c723cb58a884a2d6f9fb1ba609c2bbe001
+
+For the files in the "toolchain-4.4.3" directory:
+
+    src/toolchain-4.4.3/android/bionic:
+        Repository: http://android.git.linaro.org/git-ro/platform/bionic
+        Branch: linaro_android_4.1.2
+        Revision: b51524f0d75e3c1427a9a58bf86a47f95e073181
+
+    src/toolchain-4.4.3/android/build:
+        Repository: http://android.git.linaro.org/git-ro/platform/build
+        Branch: linaro_android_4.1.2
+        Revision: d840ac027d108f9b04bf6b0a6336e0e37dc959ad
+
+    src/toolchain-4.4.3/android/device/common:
+        Repository: http://android.git.linaro.org/git-ro/device/common
+        Branch: master
+        Revision: f5e5e76065d9dbc6f2334e4bee4af233aaebc14a
+
+    src/toolchain-4.4.3/android/device/linaro/common:
+        Repository: http://android.git.linaro.org/git-ro/device/linaro/common
+        Branch: linaro-ics
+        Revision: e418495a09618f967ccd677bc57a1e47f5b3f6c3
+
+    src/toolchain-4.4.3/android/device/linaro/pandaboard:
+        Repository: http://android.git.linaro.org/git-ro/device/linaro/pandaboard
+        Branch: linaro-jb
+        Revision: 99a0eb6f181dbfcca5e8dcdb50dbd66eb2f935d5
+
+    src/toolchain-4.4.3/android/external/elfutils:
+        Repository: http://android.git.linaro.org/git-ro/platform/external/elfutils
+        Branch: linaro_android_4.1.2
+        Revision: 1d641eedf594a59724c8bf9300f79bf6e0596119
+
+    src/toolchain-4.4.3/android/external/svox:
+        Repository: http://android.git.linaro.org/git-ro/platform/external/svox
+        Branch: refs/tags/android-4.1.2_r1
+        Revision: 358de7f221657b7ebd2619f887007f1669c20f7f
+
+    src/toolchain-4.4.3/android/frameworks/base:
+        Repository: http://android.git.linaro.org/git-ro/platform/frameworks/base
+        Branch: linaro_android_4.1.2
+        Revision: 2402d58e15d51869c5e7e58439170918506a52c7
+
+    src/toolchain-4.4.3/android/frameworks/native:
+        Repository: http://android.git.linaro.org/git-ro/platform/frameworks/native
+        Branch: linaro_android_4.1.2
+        Revision: eec5004d55d310a6960f86997c1cbf790e80b6ac
+
+    src/toolchain-4.4.3/android/hardware/ti/omap4xxx:
+        Repository: http://android.git.linaro.org/git-ro/platform/hardware/ti/omap4xxx
+        Branch: linaro_android_4.1.2
+        Revision: 7cc40a376a149e24fe4907db31b7d0f0b5e73645
+
+    src/toolchain-4.4.3/android/system/core:
+        Repository: http://android.git.linaro.org/git-ro/platform/system/core
+        Branch: linaro_android_4.1.2
+        Revision: dd28bb9220fc39f6bf793dcf2d5938e928338497
+
+    src/toolchain-4.4.3/benchmark:
+        Repository: http://android.git.linaro.org/git-ro/toolchain/benchmark
+        Branch: master
+        Revision: c7949005d4283c0be18307ffb8410780e9a4a0c3
+
+    src/toolchain-4.4.3/binutils/binutils-current:
+        Repository: http://android.git.linaro.org/git-ro/toolchain/binutils-current
+        Branch: linaro-2.23.51.0.9
+        Revision: 65c9312f0d78bc49c5c74c40b16815814e91aa7f
+
+    src/toolchain-4.4.3/build:
+        Repository: git://github.com/jld/linaro-android-toolchain-build.git
+        Branch: b2g
+        Revision: cb0e8ae59594eb1b19c2a3deff4c15d26bf26cec
+
+    src/toolchain-4.4.3/cloog/cloog-current:
+        Repository: http://android.git.linaro.org/git-ro/toolchain/cloog-current
+        Branch: linaro-0.18.0
+        Revision: 5568f19574745d6cee74bc365321e7275c0d86ca
+
+    src/toolchain-4.4.3/gcc:
+        Repository: git://github.com/jld/linaro-android-gcc.git
+        Branch: b2g
+        Revision: fca205cfa583534a1dd87b580329246b24f65de9
+
+    src/toolchain-4.4.3/gcc-patches:
+        Repository: http://android.git.linaro.org/git-ro/toolchain/gcc-patches
+        Branch: master
+        Revision: a83f24b1fdd4a6ee3cd4842427aadb1a01e5a9d6
+
+    src/toolchain-4.4.3/gdb/gdb-current:
+        Repository: http://android.git.linaro.org/git-ro/toolchain/gdb-current
+        Branch: linaro-7.5-2012.12-1
+        Revision: 034102f2605d0ae24e91b3c558a6dc79567e35ad
+
+    src/toolchain-4.4.3/gmp/gmp-current:
+        Repository: http://android.git.linaro.org/git-ro/toolchain/gmp-current
+        Branch: linaro-5.1.1
+        Revision: 4f74a6b4a5e86d22b010ea84d4e780eab3233418
+
+    src/toolchain-4.4.3/mpc/mpc-current:
+        Repository: http://android.git.linaro.org/git-ro/toolchain/mpc-current
+        Branch: linaro-1.0.1
+        Revision: 4342b66624e730a738a0bd10aa02c95021e2b9a1
+
+    src/toolchain-4.4.3/mpfr:
+        Repository: http://android.git.linaro.org/git-ro/toolchain/mpfr
+        Branch: linaro-master
+        Revision: 0604dfe8fe7040fd4332f95d4295f04cffaabd5d
+
+    src/toolchain-4.4.3/ppl:
+        Repository: http://android.git.linaro.org/git-ro/toolchain/ppl
+        Branch: linaro-master
+        Revision: 9b88dd36daafb9daa2b0277f095866386457f35e
+

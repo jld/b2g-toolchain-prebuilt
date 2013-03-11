@@ -51,6 +51,22 @@ get_linux_src() {
     fi
 }
 
+get_toolchain_src() {
+    SRCDIR=$TOPDIR/src/toolchain-4.4.3
+    PREFIX=$TOPDIR/toolchain-4.4.3
+    if [ -d "$SRCDIR" ]; then
+	cd "$SRCDIR"
+    else
+	mkdir -p "$SRCDIR"
+	cd "$SRCDIR"
+	"$REPO" $REPO_FLAGS init -u "$TOOLCHAIN_URL" -b "$TOOLCHAIN_BRANCH"
+	NO_SYNC=
+    fi
+    if [ -z "$NO_SYNC" ]; then
+	"$REPO" $REPO_FLAGS sync $REPO_SYNC_FLAGS
+    fi
+}
+
 maybe_fetch() {
     local url=$1 file=$2
     if ! [ -e "$file" ]; then
@@ -92,6 +108,24 @@ make_debian_sysroot() {
     done
 }
 
+print_sources() {
+    set +x
+    local pfx=${1:-} subdir hash url branch
+    while read subdir hash url branch; do
+	if [ "$branch" = "$hash" ]; then
+	    branch=""
+	fi
+	cat <<EOT
+    $pfx$subdir:
+        Repository: $url
+        ${branch:+Branch: $branch
+        }Revision: $hash
+
+EOT
+    done
+    set -x
+}
+
 set -x
 # FIXME: handle multiple arguments
 case "${1:-all}" in
@@ -99,22 +133,11 @@ case "${1:-all}" in
 	"$0" toolchain-4.4.3
 	"$0" perf
 	"$0" target-perf
+	"$0" SOURCES
 	;;
     toolchain-4.4.3)
-	SRCDIR=$TOPDIR/src/toolchain-4.4.3
-	PREFIX=$TOPDIR/toolchain-4.4.3
-	if [ -d "$SRCDIR" ]; then
-	    cd "$SRCDIR"
-	else
-	    mkdir -p "$SRCDIR"
-	    cd "$SRCDIR"
-	    "$REPO" $REPO_FLAGS init -u "$TOOLCHAIN_URL" -b "$TOOLCHAIN_BRANCH"
-	    NO_SYNC=
-	fi
-	if [ -z "$NO_SYNC" ]; then
-	    "$REPO" $REPO_FLAGS sync $REPO_SYNC_FLAGS
-	fi
-	cd build
+	get_toolchain_src
+	cd "$SRCDIR/build"
 	rm -rf "$PREFIX"
 	mkdir "$PREFIX"
 	if [ -r Makefile ]; then
@@ -165,9 +188,36 @@ case "${1:-all}" in
 	"$STRIP" -o "$DSTBIN" "$OBJDIR/perf"
 	;;
 
+    SOURCES)
+	NO_SYNC=t # Want to make sure we use the same revs as what's here.
+	# FIXME: that is not the right solution for that.
+	DSTTXT=$TOPDIR/SOURCES
+	cat > "$DSTTXT" <<EOT
+Sources for this prebuilt toolchain can be downloaded from their
+corresponding Git repositories.
+
+For the files in the "perf" directory:
+
+EOT
+	get_linux_src
+	cd "$SRCDIR"
+	echo src/linux `git rev-parse HEAD` "$LINUX_URL" "$LINUX_BRANCH" \
+	    | print_sources >> "$DSTTXT"
+
+	tc=toolchain-4.4.3
+	cat >> "$DSTTXT" <<EOT
+For the files in the "$tc" directory:
+
+EOT
+	get_toolchain_src
+	cd "$SRCDIR"
+	repo forall -c 'git remote -v | \
+          awk "\$1==\"$REPO_REMOTE\"&&\$3~/fetch/{\
+            print\"$REPO_PATH\",\"$REPO_LREV\",\$2,\"$REPO_RREV\"}"' \
+	    | print_sources "src/$tc/" >> "$DSTTXT"
+	;;
+
     *)
 	echo "Unknown buildable $1" >&2
 	exit 1
 esac
-
-
