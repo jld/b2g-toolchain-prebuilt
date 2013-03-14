@@ -33,7 +33,7 @@ For the files in the "toolchain-4.4.3" directory:
     src/toolchain-4.4.3/android/device/linaro/pandaboard:
         Repository: http://android.git.linaro.org/git-ro/device/linaro/pandaboard
         Branch: linaro-jb
-        Revision: 99a0eb6f181dbfcca5e8dcdb50dbd66eb2f935d5
+        Revision: 2d9eb1cb4aa4186749c4e42725f5152c029d8358
 
     src/toolchain-4.4.3/android/external/elfutils:
         Repository: http://android.git.linaro.org/git-ro/platform/external/elfutils
@@ -70,10 +70,9 @@ For the files in the "toolchain-4.4.3" directory:
         Branch: master
         Revision: c7949005d4283c0be18307ffb8410780e9a4a0c3
 
-    src/toolchain-4.4.3/binutils/binutils-current:
-        Repository: http://android.git.linaro.org/git-ro/toolchain/binutils-current
-        Branch: linaro-2.23.51.0.9
-        Revision: 65c9312f0d78bc49c5c74c40b16815814e91aa7f
+    src/toolchain-4.4.3/binutils:
+        Repository: https://android.googlesource.com/toolchain/binutils
+        Revision: e4df3e0a5bb640ccfa2f30ee67fe9b3146b152d6
 
     src/toolchain-4.4.3/build:
         Repository: git://github.com/jld/linaro-android-toolchain-build.git
@@ -83,7 +82,7 @@ For the files in the "toolchain-4.4.3" directory:
     src/toolchain-4.4.3/cloog/cloog-current:
         Repository: http://android.git.linaro.org/git-ro/toolchain/cloog-current
         Branch: linaro-0.18.0
-        Revision: 5568f19574745d6cee74bc365321e7275c0d86ca
+        Revision: dc7c6f3c3f6ec167c9824259044efdd74d53a137
 
     src/toolchain-4.4.3/gcc:
         Repository: git://github.com/jld/linaro-android-gcc.git

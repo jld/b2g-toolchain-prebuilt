@@ -146,6 +146,7 @@ case "${1:-all}" in
 	fi
 	LINARO_BUILD_EXTRA_CONFIGURE_FLAGS=-disable-graphite \
 	    LINARO_BUILD_EXTRA_MAKE_FLAGS=$TOOLCHAIN_MAKE_FLAGS \
+	    BINUTILS_VERSION=2.20.1 \
 	    ./linaro-build.sh --with-gcc=gcc-4.4.3 \
 	    --prefix="$PREFIX"
 	;;
