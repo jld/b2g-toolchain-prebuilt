@@ -53,7 +53,7 @@ if [ x$1 != x ] ; then
   prefix=$1
   shift
 else
-  prefix=/home/jld/src/b2g-toolchain-prebuilt/toolchain-4.4.3
+  prefix=/home/jld/src/b2g-toolchain-prebuilt/toolchain-4.4.3/x86_64-linux-gnu
 fi
 
 # Allow for alternate isysroot in which to find headers

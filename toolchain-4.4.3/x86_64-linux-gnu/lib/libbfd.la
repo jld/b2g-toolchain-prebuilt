@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/jld/src/b2g-toolchain-prebuilt/toolchain-4.4.3/lib'
+libdir='/home/jld/src/b2g-toolchain-prebuilt/toolchain-4.4.3/x86_64-linux-gnu/lib'

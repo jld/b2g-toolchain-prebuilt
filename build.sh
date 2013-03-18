@@ -37,6 +37,13 @@ esac
 : ${TOOLCHAIN_MAKE_FLAGS:=$MAKE_FLAGS}
 : ${LINUX_MAKE_FLAGS:=$MAKE_FLAGS}
 
+# FIXME: do this in a less bad way
+case $(uname -ms) in
+    "Linux x86_64") HOST_TRIPLE=x86_64-linux-gnu ;;
+    "Linux i686") HOST_TRIPLE=i686-linux-gnu ;;
+    *) echo "Unknown platform: $(uname -ms)" >&2; exit 1 ;;
+esac
+
 get_linux_src() {
     SRCDIR=$TOPDIR/src/linux
     if [ -d "$SRCDIR" ]; then
@@ -53,7 +60,6 @@ get_linux_src() {
 
 get_toolchain_src() {
     SRCDIR=$TOPDIR/src/toolchain-4.4.3
-    PREFIX=$TOPDIR/toolchain-4.4.3
     if [ -d "$SRCDIR" ]; then
 	cd "$SRCDIR"
     else
@@ -137,9 +143,10 @@ case "${1:-all}" in
 	;;
     toolchain-4.4.3)
 	get_toolchain_src
+	PREFIX=$TOPDIR/toolchain-4.4.3/$HOST_TRIPLE
 	cd "$SRCDIR/build"
 	rm -rf "$PREFIX"
-	mkdir "$PREFIX"
+	mkdir -p "$PREFIX"
 	if [ -r Makefile ]; then
 	    # If a build is interrupted it can break the next build.
 	    make $TOOLCHAIN_MAKE_FLAGS distclean || true
@@ -153,14 +160,8 @@ case "${1:-all}" in
 
     perf)
 	get_linux_src
-	# FIXME: do this in a less bad way
-	case $(uname -ms) in
-	    "Linux x86_64") TRIPLE=x86_64-linux-gnu ;;
-	    "Linux i686") TRIPLE=i686-linux-gnu ;;
-	    *) echo "Unknown platform: $(uname -ms)" >&2; exit 1 ;;
-	esac
-	OBJDIR=$TOPDIR/obj/perf-$TRIPLE
-	DSTBIN=$TOPDIR/perf/$TRIPLE-perf
+	OBJDIR=$TOPDIR/obj/perf-$HOST_TRIPLE
+	DSTBIN=$TOPDIR/perf/$HOST_TRIPLE-perf
 	cd "$SRCDIR/tools/perf"
 	mkdir -p "$OBJDIR"
 	make $LINUX_MAKE_FLAGS O="$OBJDIR"
@@ -176,8 +177,9 @@ case "${1:-all}" in
 	DSTBIN=$TOPDIR/perf/$REAL_TARGET_TRIPLE-perf
 	cd "$SRCDIR/tools/perf"
 	mkdir -p "$OBJDIR"
+	toolchain=$TOPDIR/toolchain-4.4.3/$HOST_TRIPLE
 	make $LINUX_MAKE_FLAGS ARCH=arm O="$OBJDIR" \
-	    CROSS_COMPILE="$TOPDIR"/toolchain-4.4.3/bin/arm-linux-androideabi- \
+	    CROSS_COMPILE=$toolchain/bin/arm-linux-androideabi- \
 	    NO_LIBELF=1 NO_NEWT=1 \
 	    CFLAGS="--sysroot=$TARGET_SYSROOT \
                 -isystem =/usr/include -isystem =/usr/include/$TARGET_TRIPLE \

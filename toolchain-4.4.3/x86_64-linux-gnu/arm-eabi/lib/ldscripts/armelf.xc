@@ -3,7 +3,7 @@ OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm",
 	      "elf32-littlearm")
 OUTPUT_ARCH(arm)
 ENTRY(_start)
-SEARCH_DIR("/home/jld/src/b2g-toolchain-prebuilt/toolchain-4.4.3/arm-eabi/lib");
+SEARCH_DIR("/home/jld/src/b2g-toolchain-prebuilt/toolchain-4.4.3/x86_64-linux-gnu/arm-eabi/lib");
 SECTIONS
 {
   /* Read-only sections, merged into text segment: */
