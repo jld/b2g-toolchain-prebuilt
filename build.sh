@@ -62,7 +62,7 @@ get_linux_src() {
 
 get_toolchain_src() {
     SRCDIR=$TOPDIR/src/toolchain-4.4.3
-    if [ -d "$SRCDIR" ]; then
+    if [ -d "$SRCDIR/.repo" ]; then
 	cd "$SRCDIR"
     else
 	mkdir -p "$SRCDIR"
