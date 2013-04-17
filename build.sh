@@ -41,6 +41,8 @@ esac
 case $(uname -ms) in
     "Linux x86_64") HOST_TRIPLE=x86_64-linux-gnu ;;
     "Linux i686") HOST_TRIPLE=i686-linux-gnu ;;
+    "Darwin x86_64") HOST_TRIPLE=x86_64-apple-darwin ;;
+    "Darwin i386") HOST_TRIPLE=i386-apple-darwin ;;
     *) echo "Unknown platform: $(uname -ms)" >&2; exit 1 ;;
 esac
 
