@@ -74,20 +74,15 @@
 #undef  CC1_SPEC
 #define CC1_SPEC                                               \
   LINUX_OR_ANDROID_CC (LINUX_TARGET_CC1_SPEC,                  \
-                      LINUX_TARGET_CC1_SPEC " " ANDROID_CC1_SPEC("-fpic"))
+                      LINUX_TARGET_CC1_SPEC " " ANDROID_CC1_SPEC)
 
 #define CC1PLUS_SPEC \
   LINUX_OR_ANDROID_CC ("", ANDROID_CC1PLUS_SPEC)
 
-#undef ASM_SPEC
-#define ASM_SPEC \
-  LINUX_OR_ANDROID_CC (LINUX_ASM_SPEC, \
-                       LINUX_ASM_SPEC  " " ANDROID_ASM_SPEC)
-
 #undef  LIB_SPEC
 #define LIB_SPEC                                           \
   LINUX_OR_ANDROID_LD (LINUX_TARGET_LIB_SPEC,                  \
-                      LINUX_TARGET_LIB_SPEC_LESS_PTHREAD " " ANDROID_LIB_SPEC)
+                      LINUX_TARGET_LIB_SPEC " " ANDROID_LIB_SPEC)
 
 #undef STARTFILE_SPEC
 #define STARTFILE_SPEC \
