@@ -15,9 +15,9 @@ File: dir,	Node: Top	This is the top of the INFO tree
 * Menu:
 
 Software development
-* Cpp: (cpp).                   The GNU C preprocessor.
-* Cpplib: (cppinternals).       Cpplib internals.
-* g++: (gcc).                   The GNU C++ compiler.
-* gcc: (gcc).                   The GNU Compiler Collection.
-* gccinstall: (gccinstall).     Installing the GNU Compiler Collection.
-* gccint: (gccint).             Internals of the GNU Compiler Collection.
+* Cpp: (cpp).                  The GNU C preprocessor.
+* Cpplib: (cppinternals).      Cpplib internals.
+* g++: (gcc).                  The GNU C++ compiler.
+* gcc: (gcc).                  The GNU Compiler Collection.
+* gccinstall: (gccinstall).    Installing the GNU Compiler Collection.
+* gccint: (gccint).            Internals of the GNU Compiler Collection.

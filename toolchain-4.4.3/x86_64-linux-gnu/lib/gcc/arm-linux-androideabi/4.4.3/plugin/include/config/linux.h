@@ -79,12 +79,10 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #undef CPLUSPLUS_CPP_SPEC
 #define CPLUSPLUS_CPP_SPEC "-D_GNU_SOURCE %(cpp)"
 
-#define LINUX_TARGET_LIB_SPEC_LESS_PTHREAD \
-   "%{shared:-lc} \
-   %{!shared:%{mieee-fp:-lieee} %{profile:-lc_p}%{!profile:-lc}}"
 #define LINUX_TARGET_LIB_SPEC \
-  "%{pthread:-lpthread} " \
-  LINUX_TARGET_LIB_SPEC_LESS_PTHREAD
+  "%{pthread:-lpthread} \
+   %{shared:-lc} \
+   %{!shared:%{mieee-fp:-lieee} %{profile:-lc_p}%{!profile:-lc}}"
 #undef  LIB_SPEC
 #define LIB_SPEC LINUX_TARGET_LIB_SPEC
 
@@ -170,9 +168,5 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 
 /* Whether we have sincos that follows the GNU extension.  */
 #define TARGET_HAS_SINCOS (OPTION_GLIBC)
-
-/* Whether we have Bionic libc runtime */
-#undef TARGET_HAS_BIONIC
-#define TARGET_HAS_BIONIC (OPTION_BIONIC)
 
 #define TARGET_POSIX_IO

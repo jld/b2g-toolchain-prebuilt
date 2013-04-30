@@ -77,7 +77,7 @@ For the files in the "toolchain-4.4.3" directory:
     src/toolchain-4.4.3/build:
         Repository: git://github.com/jld/linaro-android-toolchain-build.git
         Branch: b2g
-        Revision: 9ac49ee14a13b38c730b87539200b20c896aa4e8
+        Revision: b09d99595ade4c24ba08e0726eb536dad2e629f2
 
     src/toolchain-4.4.3/cloog/cloog-current:
         Repository: http://android.git.linaro.org/git-ro/toolchain/cloog-current
