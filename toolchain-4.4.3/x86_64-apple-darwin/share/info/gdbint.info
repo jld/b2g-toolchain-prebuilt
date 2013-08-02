@@ -1,4 +1,4 @@
-This is gdbint.info, produced by makeinfo version 4.8 from
+This is gdbint.info, produced by makeinfo version 4.13 from
 ../../.././../gdb/gdb-current/gdb/doc/gdbint.texinfo.
 
 INFO-DIR-SECTION Software development
@@ -926,7 +926,7 @@ previously available.  This new interface needed to be strongly typed,
 easy to extend, and versatile enough to be used as the standard
 interface when adding new notifications.
 
-   See *Note GDB Observers:: for a brief description of the observers
+   See *note GDB Observers:: for a brief description of the observers
 currently implemented in GDB. The rationale for the current
 implementation is also briefly discussed.
 
@@ -2119,7 +2119,7 @@ The IBM RS/6000 running AIX uses an object file format called XCOFF.
 The COFF sections, symbols, and line numbers are used, but debugging
 symbols are `dbx'-style stabs whose strings are located in the `.debug'
 section (rather than the string table).  For more information, see
-*Note Top: (stabs)Top.
+*note Top: (stabs)Top.
 
    The shared library scheme has a clean interface for figuring out what
 shared libraries are in use, but the catch is that everything which
@@ -4258,7 +4258,7 @@ architecture.
 
 `I386_USE_GENERIC_WATCHPOINTS'
      An x86-based target can define this to use the generic x86
-     watchpoint support; see *Note I386_USE_GENERIC_WATCHPOINTS:
+     watchpoint support; see *note I386_USE_GENERIC_WATCHPOINTS:
      Algorithms.
 
 `gdbarch_in_function_epilogue_p (GDBARCH, ADDR)'
@@ -4621,7 +4621,7 @@ mechanism for the user to tell GDB more about what their target
 supports, or for the target to tell GDB directly.
 
    For details on writing, automatically supplying, and manually
-selecting target descriptions, see *Note Target Descriptions:
+selecting target descriptions, see *note Target Descriptions:
 (gdb)Target Descriptions.  This section will cover some related topics
 about the GDB internals.
 
@@ -4654,7 +4654,7 @@ architecture's gdbarch initialization routine is called to create the
 new architecture.  Then the initialization routine is called, and has a
 chance to adjust the constructed architecture based on the contents of
 the target description.  For instance, it can recognize any properties
-set by a `to_read_description' routine.  Also see *Note Adding Target
+set by a `to_read_description' routine.  Also see *note Adding Target
 Described Register Support::.
 
 
@@ -4926,7 +4926,7 @@ the same.  These macros should be defined (or left undefined) in
 
 `I386_USE_GENERIC_WATCHPOINTS'
      An x86-based machine can define this to use the generic x86
-     watchpoint support; see *Note I386_USE_GENERIC_WATCHPOINTS:
+     watchpoint support; see *note I386_USE_GENERIC_WATCHPOINTS:
      Algorithms.
 
 `SOLIB_ADD (FILENAME, FROM_TTY, TARG, READSYMS)'
@@ -8868,85 +8868,85 @@ Function and Variable Index
 
 
 Tag Table:
-Node: Top1435
-Node: Summary2386
-Node: Requirements2536
-Node: Contributors4015
-Node: Overall Structure5608
-Node: Algorithms10631
-Node: User Interface42073
-Ref: UI-Independent Output43928
-Ref: User Interface-Footnote-165918
-Ref: User Interface-Footnote-265967
-Node: libgdb66202
-Node: Values70153
-Node: Stack Frames72997
-Node: Symbol Handling77979
-Node: Language Support94784
-Node: Host Definition99510
-Node: Target Architecture Definition103869
-Node: OS ABI Variant Handling104689
-Node: Initialize New Architecture109534
-Node: How an Architecture is Represented109885
-Node: Looking Up an Existing Architecture111842
-Node: Creating a New Architecture114761
-Node: Registers and Memory116799
-Node: Pointers and Addresses117591
-Ref: Pointers and Addresses-Footnote-1123592
-Node: Address Classes123835
-Node: Register Representation127080
-Node: Raw and Cooked Registers127454
-Node: Register Architecture Functions & Variables128638
-Node: Register Information Functions132247
-Ref: Register Information Functions-Footnote-1138149
-Node: Register and Memory Data138568
-Node: Register Caching141717
-Node: Frame Interpretation143253
-Node: All About Stack Frames143659
-Ref: All About Stack Frames-Footnote-1148951
-Node: Frame Handling Terminology149183
-Node: Prologue Caches151710
-Node: Functions and Variable to Analyze Frames153391
-Ref: frame_align155489
-Node: Functions to Access Frame Data157003
-Node: Analyzing Stacks---Frame Sniffers159294
-Ref: Analyzing Stacks---Frame Sniffers-Footnote-1163944
-Node: Inferior Call Setup164441
-Node: About Dummy Frames164724
-Node: Functions Creating Dummy Frames165350
-Node: Adding support for debugging core files169407
-Node: Defining Other Architecture Features169951
-Ref: gdbarch_breakpoint_from_pc174798
-Ref: gdbarch_stabs_argument_has_addr187192
-Ref: gdbarch_push_dummy_call187439
-Ref: gdbarch_push_dummy_code187999
-Ref: gdbarch_return_value188981
-Ref: gdbarch_dummy_id194618
-Node: Adding a New Target195306
-Node: Target Descriptions197773
-Node: Target Descriptions Implementation198712
-Node: Adding Target Described Register Support200086
-Node: Target Vector Definition203032
-Node: Managing Execution State203564
-Node: Existing Targets205377
-Node: Native Debugging207892
-Node: Support Libraries211720
-Node: Coding Standards223245
-Node: Misc Guidelines231406
-Node: Porting GDB249769
-Node: Versions and Branches251647
-Ref: Tags257603
-Ref: experimental branch tags257934
-Node: Start of New Year Procedure258666
-Node: Releasing GDB260127
-Node: Testsuite278359
-Ref: Testsuite-Footnote-1293236
-Node: Hints293354
-Node: Getting Started293676
-Node: Debugging GDB297841
-Node: GDB Observers302969
-Node: GNU Free Documentation License311513
-Node: Concept Index336688
-Node: Function and Variable Index360323
+Node: Top1436
+Node: Summary2387
+Node: Requirements2537
+Node: Contributors4016
+Node: Overall Structure5609
+Node: Algorithms10632
+Node: User Interface42074
+Ref: UI-Independent Output43929
+Ref: User Interface-Footnote-165919
+Ref: User Interface-Footnote-265968
+Node: libgdb66203
+Node: Values70154
+Node: Stack Frames72998
+Node: Symbol Handling77980
+Node: Language Support94785
+Node: Host Definition99511
+Node: Target Architecture Definition103870
+Node: OS ABI Variant Handling104690
+Node: Initialize New Architecture109535
+Node: How an Architecture is Represented109886
+Node: Looking Up an Existing Architecture111843
+Node: Creating a New Architecture114762
+Node: Registers and Memory116800
+Node: Pointers and Addresses117592
+Ref: Pointers and Addresses-Footnote-1123593
+Node: Address Classes123836
+Node: Register Representation127081
+Node: Raw and Cooked Registers127455
+Node: Register Architecture Functions & Variables128639
+Node: Register Information Functions132248
+Ref: Register Information Functions-Footnote-1138150
+Node: Register and Memory Data138569
+Node: Register Caching141718
+Node: Frame Interpretation143254
+Node: All About Stack Frames143660
+Ref: All About Stack Frames-Footnote-1148952
+Node: Frame Handling Terminology149184
+Node: Prologue Caches151711
+Node: Functions and Variable to Analyze Frames153392
+Ref: frame_align155490
+Node: Functions to Access Frame Data157004
+Node: Analyzing Stacks---Frame Sniffers159295
+Ref: Analyzing Stacks---Frame Sniffers-Footnote-1163945
+Node: Inferior Call Setup164442
+Node: About Dummy Frames164725
+Node: Functions Creating Dummy Frames165351
+Node: Adding support for debugging core files169408
+Node: Defining Other Architecture Features169952
+Ref: gdbarch_breakpoint_from_pc174799
+Ref: gdbarch_stabs_argument_has_addr187193
+Ref: gdbarch_push_dummy_call187440
+Ref: gdbarch_push_dummy_code188000
+Ref: gdbarch_return_value188982
+Ref: gdbarch_dummy_id194619
+Node: Adding a New Target195307
+Node: Target Descriptions197774
+Node: Target Descriptions Implementation198713
+Node: Adding Target Described Register Support200087
+Node: Target Vector Definition203033
+Node: Managing Execution State203565
+Node: Existing Targets205378
+Node: Native Debugging207893
+Node: Support Libraries211721
+Node: Coding Standards223246
+Node: Misc Guidelines231407
+Node: Porting GDB249770
+Node: Versions and Branches251648
+Ref: Tags257604
+Ref: experimental branch tags257935
+Node: Start of New Year Procedure258667
+Node: Releasing GDB260128
+Node: Testsuite278360
+Ref: Testsuite-Footnote-1293237
+Node: Hints293355
+Node: Getting Started293677
+Node: Debugging GDB297842
+Node: GDB Observers302970
+Node: GNU Free Documentation License311514
+Node: Concept Index336689
+Node: Function and Variable Index360324
 
 End Tag Table
