@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/Users/jld/src/b2g-toolchain-prebuilt/toolchain-4.4.3/x86_64-apple-darwin/lib'
+libdir='/Users/kats/zspace/b2g-toolchain-prebuilt/toolchain-4.4.3/x86_64-apple-darwin/lib'
